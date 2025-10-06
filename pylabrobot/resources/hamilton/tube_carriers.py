@@ -5,6 +5,29 @@ from pylabrobot.resources.carrier import (
   create_homogeneous_resources,
 )
 
+def Tube_CAR_12_A00(name: str) -> TubeCarrier:
+  """Hamilton cat. no.: 182045
+  Hamilton name: 'SMP_CAR_12_A00'.
+  'Sample' carrier for 12 tubes of type 50 mL Falcon
+  2 track(T) wide.
+  """
+  return TubeCarrier(
+    name=name,
+    size_x=45,
+    size_y=497.0,
+    size_z=96.0,
+    sites=create_homogeneous_resources(
+      klass=ResourceHolder,
+      locations=[
+        Coordinate(10.5, 27.5 + x * 37, 16.0 + 1.2) for x in range(12)
+      ],  # TODO: +1.2 to account for the Tube.material_z_thickness, fix container
+      resource_size_x=30.0,
+      resource_size_y=30.0,
+      name_prefix=name,
+    ),
+    model="Tube_CAR_12_A00",
+  )
+
 
 def Tube_CAR_24_A00(name: str) -> TubeCarrier:
   """Hamilton cat. no.: 173400
