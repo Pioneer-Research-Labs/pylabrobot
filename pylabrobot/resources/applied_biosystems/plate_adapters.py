@@ -17,7 +17,7 @@ def AppliedBiosystems_96_Well_Base(name: str) -> PlateAdapter:
     size_z=22.86,  # from spec
     dx=10.25,  # from spec
     dy=7.34,  # from spec
-    dz=22.86,  # from spec, plate sits flush on top
+    dz=0,  # from spec, just an open hole to the deck
     adapter_hole_size_x=8.0,  # from spec
     adapter_hole_size_y=8.0,  # from spec
     adapter_hole_size_z=22.86,  # from spec, just an open hole to the deck
