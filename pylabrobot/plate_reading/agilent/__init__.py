@@ -6,3 +6,4 @@ from .biotek_cytation_backend import (
   CytationImagingConfig,
 )
 from .biotek_synergyh1_backend import SynergyH1Backend
+from .biotek_synergyht_backend import SynergyHTBackend
