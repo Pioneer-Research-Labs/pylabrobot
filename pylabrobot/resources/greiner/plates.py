@@ -2,6 +2,10 @@
 
 from pylabrobot.resources.plate import Lid, Plate
 from pylabrobot.resources.utils import create_ordered_items_2d
+from pylabrobot.resources.height_volume_functions import (
+  calculate_liquid_height_in_container_2segments_round_vbottom,
+  calculate_liquid_volume_container_2segments_round_vbottom,
+)
 from pylabrobot.resources.well import (
   CrossSectionType,
   Well,
@@ -115,5 +119,37 @@ def Greiner_96_half_skirt_wellplate_200uL_vb(name: str, with_lid: bool = False) 
       cross_section_type=CrossSectionType.CIRCLE,
       bottom_type=WellBottomType.V,
       max_volume=200,  # from spec (0.2 mL)
+      compute_volume_from_height= _compute_volume_from_height_Greiner_96_half_skirt_wellplate_200uL_vb,
+      compute_height_from_volume=_compute_height_from_volume_Greiner_96_half_skirt_wellplate_200uL_vb,
     ),
+  )
+
+
+# Volume-height functions
+def _compute_volume_from_height_Greiner_96_half_skirt_wellplate_200uL_vb(
+  h: float,
+) -> float:
+  if h > 21.8:  # 5% tolerance
+    raise ValueError(f"Height {h} is too large for Greiner_96_half_skirt_wellplate_200uL_vb")
+  return calculate_liquid_volume_container_2segments_round_vbottom(
+      d= 5.56,
+      h_cone= 10.54,
+      h_cylinder= 10.11,
+      liquid_height=h
+  )
+
+
+def _compute_height_from_volume_Greiner_96_half_skirt_wellplate_200uL_vb(
+  liquid_volume: float,
+):
+  if liquid_volume > 210:  # 5% tolerance
+    raise ValueError(f"Volume {liquid_volume} is too large for Greiner_96_half_skirt_wellplate_200uL_vb")
+  return round(
+    calculate_liquid_height_in_container_2segments_round_vbottom(
+      d= 5.56,
+      h_cone= 10.54,
+      h_cylinder= 10.11,
+      liquid_volume=liquid_volume,
+    ),
+    3,
   )
