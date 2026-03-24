@@ -61,6 +61,12 @@ class SynergyHTBackend(BioTekPlateReaderBackend):
     if plate is not None:
       await self.set_plate(plate)
     return await self.send_command("A")
+  
+  async def get_current_temperature(self) -> float:
+    """Get current temperature in degrees Celsius."""
+    resp = await self.send_command("h", timeout=1)
+    assert resp is not None
+    return int(resp[1:-5])/10
 
   async def get_available_wavelengths(self) -> List[int]:
     """Query the instrument for its installed absorbance filter wavelengths.
